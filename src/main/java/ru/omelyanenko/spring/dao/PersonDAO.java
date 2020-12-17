@@ -63,7 +63,7 @@ public class PersonDAO {
             }
             public Person show(int id){
          Person person = new Person();
-         String SQL ="SELECT * FROM users WHERE id="+id;
+         String SQL ="SELECT * FROM person WHERE id="+id;
                 try {
                     Statement statement = connection.createStatement();
                     ResultSet resultSet = statement.executeQuery(SQL);
@@ -80,7 +80,7 @@ public class PersonDAO {
             }
 
             public void addPerson(Person person){
-            String SQL ="INSERT INTO users (age, name, email) values ("+person.getAge()+",'"+
+            String SQL ="INSERT INTO person (age, name, email) values ("+person.getAge()+",'"+
                     person.getName()+"','"+person.getEmail()+"');";
                 try {
                     Statement statement = connection.createStatement();
