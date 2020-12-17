@@ -13,21 +13,22 @@
     <title>New person</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/people}" th:object="${person}" class="m-5">
-    <div class="form-group">
+<form th:method="POST" th:action="@{/people}" th:object="${person}" class="mx-auto mt-5" style="width: 200px;">
+
+    <div class="form-group " >
         <label for="name">Name</label>
         <input type="text" class="form-control" th:field="*{name}" id="name" aria-describedby="emailHelp"
                placeholder="Enter name">
         <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">error message</div>
 
     </div>
-    <div class="form-group">
+    <div class="form-group  " >
         <label for="age">Age</label>
         <input type="number" th:field="*{age}" id="age" class="form-control" placeholder="0">
         <div style="color: #ff0000" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">error message</div>
 
     </div>
-    <div class="form-group">
+    <div class="form-group " >
         <label for="email">Email</label>
 
         <input type="text" th:field="*{email}" id="email" class="form-control" placeholder="Enter email">

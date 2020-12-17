@@ -4,6 +4,7 @@ import ru.omelyanenko.spring.models.Person;
 import org.springframework.stereotype.Component;
 
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,37 +14,87 @@ import java.util.List;
 @Component
 public class PersonDAO {
 
-   private static int PERSON_ID;
 
-   List<Person>listUser;
-    {
-        listUser=new ArrayList<>();
-        listUser.add(new Person(++PERSON_ID,"Tom",18,"tom@gmail.com"));
-        listUser.add(new Person(++PERSON_ID,"Andrey",16,"andr@gmail.com"));
-        listUser.add(new Person(++PERSON_ID,"Anna",15,"anna@gmail.com"));
-        listUser.add(new Person(++PERSON_ID,"Kate",21,"kate@gmail.com"));
-            }
+   private static final String URL= "jdbc:postgresql://localhost:5432/mydb";
+   private static final String NAME= "postgres";
+   private static final String PASS= "admin";
+ private static Connection connection;
+
+ static {
+     try {
+         Class.forName("org.postgresql.Driver");
+     } catch (ClassNotFoundException e) {
+         e.printStackTrace();
+     }
+
+     try {
+         connection= DriverManager.getConnection(URL,NAME,PASS);
+
+     } catch (SQLException throwables) {
+         throwables.printStackTrace();
+     }
+ }
+
 
             public List<Person> getListUser(){
+     List<Person>listUser = new ArrayList<>();
+     String querySQL = "SELECT * FROM users";
+
+
+                try {
+                    Statement statement =connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery(querySQL);
+
+                    while (resultSet.next()){
+                        Person person =new Person();
+                        person.setId( resultSet.getInt("id"));
+                        person.setAge( resultSet.getInt("age"));
+                        person.setName( resultSet.getString("name"));
+                        person.setEmail( resultSet.getString("email"));
+                        listUser.add(person);
+                    }
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
         return listUser;
             }
             public Person show(int id){
-       return listUser.stream().filter(listUser->listUser.getId()==id).findAny().orElse(null);
+         Person person = new Person();
+         String SQL ="SELECT * FROM users WHERE id="+id;
+                try {
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery(SQL);
+                    while (resultSet.next()) {
+                        person.setId(resultSet.getInt("id"));
+                        person.setAge(resultSet.getInt("age"));
+                        person.setName(resultSet.getString("name"));
+                        person.setEmail(resultSet.getString("email"));
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                return person;
             }
+
             public void addPerson(Person person){
-        person.setId(++PERSON_ID);
-        listUser.add(person);
+            String SQL ="INSERT INTO users (age, name, email) values ("+person.getAge()+",'"+
+                    person.getName()+"','"+person.getEmail()+"');";
+                try {
+                    Statement statement = connection.createStatement();
+                    statement.executeUpdate(SQL);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
 
 
     public void update(Person person, int id) {
-        Person updUser = show(id);
-        updUser.setName(person.getName());
-        updUser.setAge(person.getAge());
-        updUser.setEmail(person.getEmail());
+
 
     }
     public void delete (int id){
-        listUser.removeIf(p->p.getId()==id);
+
     }
 }
