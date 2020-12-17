@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author Neil Alishev
@@ -14,15 +15,15 @@ import java.util.List;
 @Component
 public class PersonDAO {
 
+   private static final String URL = "jdbc:mysql://localhost:3306/users?serverTimezone=" + TimeZone.getDefault().getID();
 
-   private static final String URL= "jdbc:postgresql://localhost:5432/mydb";
-   private static final String NAME= "postgres";
-   private static final String PASS= "admin";
+   private static final String NAME= "admin";
+   private static final String PASS= "12345";
  private static Connection connection;
 
  static {
      try {
-         Class.forName("org.postgresql.Driver");
+         Class.forName("com.mysql.jdbc.Driver");
      } catch (ClassNotFoundException e) {
          e.printStackTrace();
      }
@@ -38,7 +39,7 @@ public class PersonDAO {
 
             public List<Person> getListUser(){
      List<Person>listUser = new ArrayList<>();
-     String querySQL = "SELECT * FROM users";
+     String querySQL = "SELECT * FROM person";
 
 
                 try {
