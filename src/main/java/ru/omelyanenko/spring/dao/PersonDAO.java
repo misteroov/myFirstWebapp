@@ -92,10 +92,26 @@ public class PersonDAO {
 
 
     public void update(Person person, int id) {
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement("UPDATE person SET age =?,name= ?, email = ? WHERE id = ?");
+            preparedStatement.setInt(1,person.getAge());
+            preparedStatement.setString(2,person.getName());
+            preparedStatement.setString(3,person.getEmail());
+            preparedStatement.setInt(4,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
 
     }
     public void delete (int id){
-
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE from person WHERE id = ?");
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }
