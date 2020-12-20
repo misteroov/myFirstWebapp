@@ -29,11 +29,13 @@
                             <i class="glyphicon glyphicon-envelope"></i>
                             <a th:text="${user.getEmail()}"></a>
                             <br />
-                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.myEmail.com</a>
+                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.myPage.com</a>
                             <br />
                             <i class="glyphicon glyphicon-gift"></i><a th:text="${user.getAge()}"></a> </p>
-                        <!-- Split button -->
-                        <button type="button" class="btn btn-primary" th:href="@{{id}/edit (id=${user.getId()})}">Edit</button>
+                        <a class="btn btn-primary"  th:href="@{{id}/edit (id=${user.getId()})}" role="button">Edit</a>
+                        <form th:method="DELETE" th:action="@{{id}(id=${user.getId()})} ">
+                            <input class="btn btn-primary"  type="submit" value="Delete!"/>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -42,10 +44,8 @@
 </div>
 
 
-<br>
-<form th:method="DELETE" th:action="@{{id}(id=${user.getId()})} ">
-    <input type="submit" value="Delete!"/>
-</form>
+
+
 
 </body>
 </html>
