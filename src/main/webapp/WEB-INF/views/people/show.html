@@ -32,9 +32,9 @@
                             <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.myPage.com</a>
                             <br />
                             <i class="glyphicon glyphicon-gift"></i><a th:text="${user.getAge()}"></a> </p>
-                        <a class="btn btn-primary"  th:href="@{{id}/edit (id=${user.getId()})}" role="button">Edit</a>
+                        <a class="btn btn-primary btn-sm"  th:href="@{{id}/edit (id=${user.getId()})}" role="button">Edit</a>
                         <form th:method="DELETE" th:action="@{{id}(id=${user.getId()})} ">
-                            <input class="btn btn-primary"  type="submit" value="Delete!"/>
+                            <input class="btn btn-danger btn-sm"  type="submit" value="Delete!"/>
                         </form>
                     </div>
                 </div>
